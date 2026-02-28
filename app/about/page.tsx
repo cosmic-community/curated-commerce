@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getPageBySlug, getCollections } from '@/lib/cosmic'
+import type { Collection } from '@/types'
 import CollectionCard from '@/components/CollectionCard'
 
 export const metadata: Metadata = {
@@ -49,7 +50,7 @@ export default async function AboutPage() {
       <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
         {content ? (
           <div className="prose max-w-none">
-            {content.split('\n').map((paragraph, index) => {
+            {content.split('\n').map((paragraph: string, index: number) => {
               const trimmed = paragraph.trim()
               if (!trimmed) return null
 
@@ -84,7 +85,7 @@ export default async function AboutPage() {
               const parts = trimmed.split(/(\*\*[^*]+\*\*)/g)
               return (
                 <p key={index} className="text-gray-600 leading-relaxed my-4 text-lg">
-                  {parts.map((part, partIndex) => {
+                  {parts.map((part: string, partIndex: number) => {
                     if (part.startsWith('**') && part.endsWith('**')) {
                       return (
                         <strong key={partIndex} className="font-semibold text-gray-900">
@@ -170,7 +171,7 @@ export default async function AboutPage() {
             </Link>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {collections.map((collection) => (
+            {collections.map((collection: Collection) => (
               <CollectionCard key={collection.id} collection={collection} />
             ))}
           </div>

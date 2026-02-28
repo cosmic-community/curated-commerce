@@ -10,6 +10,12 @@ export interface CosmicObject {
   modified_at: string
 }
 
+// Cosmic file/image type
+export interface CosmicImage {
+  url: string
+  imgix_url: string
+}
+
 // Collection type
 export interface Collection extends CosmicObject {
   type: 'collections'
@@ -46,6 +52,9 @@ export interface RatingValue {
   value: string
 }
 
+// Review rating type (alias for compatibility)
+export type ReviewRating = RatingValue
+
 // Review type
 export interface Review extends CosmicObject {
   type: 'reviews'
@@ -55,6 +64,22 @@ export interface Review extends CosmicObject {
     rating: RatingValue
     review: string
     verified_purchase?: boolean
+  }
+}
+
+// Changed: Added Page type for CMS-powered pages
+export interface Page {
+  id: string
+  title: string
+  slug: string
+  type: string
+  created_at?: string
+  modified_at?: string
+  metadata: {
+    heading: string
+    subtitle: string
+    content: string
+    hero_image?: CosmicImage
   }
 }
 
