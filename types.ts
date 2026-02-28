@@ -16,6 +16,12 @@ export interface CosmicImage {
   imgix_url: string
 }
 
+// Changed: Added CosmicFile alias for compatibility with types/index.ts consumers
+export interface CosmicFile {
+  url: string
+  imgix_url: string
+}
+
 // Collection type
 export interface Collection extends CosmicObject {
   type: 'collections'
@@ -80,6 +86,18 @@ export interface Page {
     subtitle: string
     content: string
     hero_image?: CosmicImage
+  }
+}
+
+// Changed: Added BlogPost type for the blog-posts object type
+export interface BlogPost extends CosmicObject {
+  metadata: {
+    title: string
+    subtitle: string
+    content: string
+    featured_image_description: string
+    tags: string
+    author: string
   }
 }
 
