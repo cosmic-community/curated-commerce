@@ -1,5 +1,5 @@
 import { createBucketClient } from '@cosmicjs/sdk'
-import type { Product, Collection, Review } from '@/types'
+import type { Product, Collection, Review, Page } from '@/types'
 import { hasStatus } from '@/types'
 
 export const cosmic = createBucketClient({
@@ -137,5 +137,25 @@ export async function getReviewsByProduct(productId: string): Promise<Review[]> 
       return []
     }
     throw new Error('Failed to fetch reviews by product')
+  }
+}
+
+// Changed: Added function to fetch a page by slug
+export async function getPageBySlug(slug: string): Promise<Page | null> {
+  try {
+    const response = await cosmic.objects
+      .findOne({
+        type: 'pages',
+        slug,
+      })
+      .props(['id', 'title', 'slug', 'metadata', 'created_at', 'modified_at', 'type'])
+      .depth(1)
+
+    return response.object as Page
+  } catch (error) {
+    if (hasStatus(error) && error.status === 404) {
+      return null
+    }
+    throw new Error('Failed to fetch page')
   }
 }
