@@ -11,13 +11,14 @@ export interface CosmicObject {
   title: string
   content?: string
   metadata: Record<string, unknown>
-  type?: string
-  created_at?: string
-  modified_at?: string
+  type: string
+  created_at: string
+  modified_at: string
 }
 
 // Collection type
 export interface Collection extends CosmicObject {
+  type: 'collections'
   metadata: {
     name: string
     description?: string
@@ -27,6 +28,7 @@ export interface Collection extends CosmicObject {
 
 // Product type
 export interface Product extends CosmicObject {
+  type: 'products'
   metadata: {
     name: string
     description?: string
@@ -46,6 +48,7 @@ export interface RatingValue {
 
 // Review type
 export interface Review extends CosmicObject {
+  type: 'reviews'
   metadata: {
     product?: Product
     reviewer_name: string
@@ -79,7 +82,7 @@ export interface CartItem {
   image?: CosmicImage
 }
 
-// Type guard for error with status
+// Helper to check if error has status
 export function hasStatus(error: unknown): error is { status: number } {
   return (
     typeof error === 'object' &&
