@@ -34,10 +34,15 @@ export default function Footer() {
                   Collections
                 </Link>
               </li>
-              {/* Changed: Added About link */}
+              {/* Added About link */}
               <li>
                 <Link href="/about" className="text-sm text-gray-500 hover:text-gray-700 transition-colors">
                   About Us
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="text-sm text-gray-500 hover:text-gray-700 transition-colors">
+                  Contact Us
                 </Link>
               </li>
             </ul>

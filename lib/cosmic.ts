@@ -1,5 +1,5 @@
 import { createBucketClient } from '@cosmicjs/sdk'
-import type { Product, Collection, Review, Page, Order } from '@/types'
+import type { Product, Collection, Review } from '@/types'
 import { hasStatus } from '@/types'
 
 export const cosmic = createBucketClient({
@@ -137,71 +137,5 @@ export async function getReviewsByProduct(productId: string): Promise<Review[]> 
       return []
     }
     throw new Error('Failed to fetch reviews by product')
-  }
-}
-
-// Fetch a page by slug (for About and other static pages)
-export async function getPageBySlug(slug: string): Promise<Page | null> {
-  try {
-    const response = await cosmic.objects
-      .findOne({
-        type: 'pages',
-        slug,
-      })
-      .props(['id', 'title', 'slug', 'metadata', 'created_at', 'modified_at', 'type'])
-      .depth(1)
-
-    return response.object as Page
-  } catch (error) {
-    if (hasStatus(error) && error.status === 404) {
-      return null
-    }
-    throw new Error('Failed to fetch page')
-  }
-}
-
-// Create a new order in Cosmic
-export async function createOrder(orderData: {
-  stripeSessionId: string
-  customerEmail: string
-  items: string
-  totalAmount: number
-}): Promise<Order> {
-  const response = await cosmic.objects.insertOne({
-    title: `Order ${orderData.stripeSessionId.slice(-8)}`,
-    type: 'orders',
-    metadata: {
-      stripe_session_id: orderData.stripeSessionId,
-      customer_email: orderData.customerEmail,
-      items: orderData.items,
-      total_amount: orderData.totalAmount,
-      order_status: 'Pending',
-    },
-  })
-
-  return response.object as Order
-}
-
-// Get orders by Stripe session ID
-export async function getOrderBySessionId(sessionId: string): Promise<Order | null> {
-  try {
-    const response = await cosmic.objects
-      .find({
-        type: 'orders',
-        'metadata.stripe_session_id': sessionId,
-      })
-      .props(['id', 'title', 'slug', 'metadata', 'created_at', 'modified_at', 'type'])
-      .depth(1)
-
-    const orders = response.objects as Order[]
-    if (orders.length === 0) {
-      return null
-    }
-    return orders[0] ?? null
-  } catch (error) {
-    if (hasStatus(error) && error.status === 404) {
-      return null
-    }
-    throw new Error('Failed to fetch order')
   }
 }
