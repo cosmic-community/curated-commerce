@@ -34,6 +34,11 @@ export default function Footer() {
                   Collections
                 </Link>
               </li>
+              <li>
+                <Link href="/contact" className="text-sm text-gray-500 hover:text-gray-700 transition-colors">
+                  Contact Us
+                </Link>
+              </li>
             </ul>
           </div>
 

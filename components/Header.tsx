@@ -29,6 +29,12 @@ export default function Header() {
             >
               Collections
             </Link>
+            <Link
+              href="/contact"
+              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              Contact
+            </Link>
           </nav>
         </div>
       </div>
