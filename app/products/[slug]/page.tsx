@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getProductBySlug, getReviewsByProduct } from '@/lib/cosmic'
 import ReviewCard from '@/components/ReviewCard'
+import AddToCartButton from '@/components/AddToCartButton'
 import ReactMarkdown from 'react-markdown'
 
 interface ProductPageProps {
@@ -135,6 +136,11 @@ export default async function ProductPage({ params }: ProductPageProps) {
               SKU: {product.metadata.sku}
             </p>
           )}
+
+          {/* Changed: Added Add to Cart button on product detail page */}
+          <div className="mt-8">
+            <AddToCartButton product={product} size="large" />
+          </div>
 
           {/* Description */}
           {product.metadata.description && (

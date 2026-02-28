@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import CartButton from '@/components/CartButton'
 
 export default function Header() {
   return (
@@ -29,6 +30,8 @@ export default function Header() {
             >
               Collections
             </Link>
+            {/* Changed: Added cart button to header */}
+            <CartButton />
           </nav>
         </div>
       </div>
