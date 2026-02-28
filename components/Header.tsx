@@ -29,6 +29,13 @@ export default function Header() {
             >
               Collections
             </Link>
+            {/* About link */}
+            <Link
+              href="/about"
+              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              About
+            </Link>
             <Link
               href="/contact"
               className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
