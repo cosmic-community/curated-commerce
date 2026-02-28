@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getPageBySlug, getCollections, getReviews } from '@/lib/cosmic'
+import type { Collection, Review } from '@/types' // Changed: Added explicit type imports
 import ReviewCard from '@/components/ReviewCard'
 
 export const metadata: Metadata = {
@@ -96,7 +97,7 @@ export default async function AboutPage() {
               </p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {collections.map((collection) => (
+              {collections.map((collection: Collection) => ( // Changed: Added explicit Collection type
                 <Link
                   key={collection.id}
                   href={`/collections/${collection.slug}`}
@@ -133,7 +134,7 @@ export default async function AboutPage() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {reviews.map((review) => (
+            {reviews.map((review: Review) => ( // Changed: Added explicit Review type
               <ReviewCard key={review.id} review={review} />
             ))}
           </div>

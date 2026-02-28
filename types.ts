@@ -10,6 +10,12 @@ export interface CosmicObject {
   modified_at: string
 }
 
+// Cosmic file/image type
+export interface CosmicImage {
+  url: string
+  imgix_url: string
+}
+
 // Collection type
 export interface Collection extends CosmicObject {
   type: 'collections'
@@ -56,6 +62,24 @@ export interface Review extends CosmicObject {
     review: string
     verified_purchase?: boolean
   }
+}
+
+// Changed: Page type for static pages like About
+export interface Page extends CosmicObject {
+  metadata: {
+    heading: string
+    subheading: string
+    content: string
+    hero_image?: CosmicImage
+    sections?: PageSection[]
+  }
+}
+
+// Changed: Individual page section for structured content
+export interface PageSection {
+  title: string
+  content: string
+  image?: CosmicImage
 }
 
 // Helper to check if error has status
