@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-brand-50 text-gray-900;
+  }
+}
+
+@layer components {
+  .prose h2 {
+    @apply text-xl font-semibold text-gray-900 mt-4 mb-2;
+  }
+
+  .prose strong {
+    @apply font-semibold text-gray-900;
+  }
+
+  .prose ul {
+    @apply list-disc list-inside space-y-1 text-gray-600 my-3;
+  }
+
+  .prose li {
+    @apply text-gray-600;
+  }
+
+  .prose p {
+    @apply text-gray-600 leading-relaxed my-2;
+  }
+}
