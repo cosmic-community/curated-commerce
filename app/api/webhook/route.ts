@@ -2,9 +2,8 @@ import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { createOrder } from '@/lib/cosmic'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-  apiVersion: '2025-04-30.basil',
-})
+// Changed: Removed explicit apiVersion to use the SDK's default matching version
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string)
 
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET as string
 
