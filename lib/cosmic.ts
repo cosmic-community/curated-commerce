@@ -1,5 +1,5 @@
 import { createBucketClient } from '@cosmicjs/sdk'
-import type { Product, Collection, Review, Page } from '@/types'
+import type { Product, Collection, Review, Page, BlogPost } from '@/types'
 import { hasStatus } from '@/types'
 
 export const cosmic = createBucketClient({
@@ -157,5 +157,42 @@ export async function getPageBySlug(slug: string): Promise<Page | null> {
       return null
     }
     throw new Error('Failed to fetch page')
+  }
+}
+
+// Changed: Added function to fetch all blog posts
+export async function getBlogPosts(): Promise<BlogPost[]> {
+  try {
+    const response = await cosmic.objects
+      .find({ type: 'blog-posts' })
+      .props(['id', 'title', 'slug', 'metadata', 'created_at', 'modified_at', 'type'])
+      .depth(1)
+
+    return response.objects as BlogPost[]
+  } catch (error) {
+    if (hasStatus(error) && error.status === 404) {
+      return []
+    }
+    throw new Error('Failed to fetch blog posts')
+  }
+}
+
+// Changed: Added function to fetch a single blog post by slug
+export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> {
+  try {
+    const response = await cosmic.objects
+      .findOne({
+        type: 'blog-posts',
+        slug,
+      })
+      .props(['id', 'title', 'slug', 'metadata', 'created_at', 'modified_at', 'type'])
+      .depth(1)
+
+    return response.object as BlogPost
+  } catch (error) {
+    if (hasStatus(error) && error.status === 404) {
+      return null
+    }
+    throw new Error('Failed to fetch blog post')
   }
 }

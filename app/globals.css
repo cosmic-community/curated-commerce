@@ -33,4 +33,12 @@
   .prose p {
     @apply text-gray-600 leading-relaxed my-2;
   }
+
+  /* Changed: Added line-clamp utility for blog card text truncation */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 }
