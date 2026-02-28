@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import CartIcon from '@/components/CartIcon'
 
 export default function Header() {
   return (
@@ -16,32 +17,27 @@ export default function Header() {
           </Link>
 
           {/* Navigation */}
-          <nav className="flex items-center gap-8">
+          <nav className="flex items-center gap-6 sm:gap-8">
             <Link
               href="/products"
-              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors hidden sm:block"
             >
               Products
             </Link>
             <Link
               href="/collections"
-              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors hidden sm:block"
             >
               Collections
             </Link>
-            {/* About link */}
             <Link
               href="/about"
-              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
+              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors hidden sm:block"
             >
               About
             </Link>
-            <Link
-              href="/contact"
-              className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
-            >
-              Contact
-            </Link>
+            {/* Changed: Added cart icon to header */}
+            <CartIcon />
           </nav>
         </div>
       </div>

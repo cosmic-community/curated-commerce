@@ -1,5 +1,5 @@
 import { createBucketClient } from '@cosmicjs/sdk'
-import type { Product, Collection, Review, Page } from '@/types'
+import type { Product, Collection, Review, Page, Order } from '@/types'
 import { hasStatus } from '@/types'
 
 export const cosmic = createBucketClient({
@@ -157,5 +157,73 @@ export async function getPageBySlug(slug: string): Promise<Page | null> {
       return null
     }
     throw new Error('Failed to fetch page')
+  }
+}
+
+// Changed: Added function to create an order in Cosmic
+export async function createOrder(orderData: {
+  orderNumber: string
+  customerEmail: string
+  itemsJson: string
+  totalAmount: number
+  stripeSessionId: string
+}): Promise<Order> {
+  const response = await cosmic.objects.insertOne({
+    title: `Order ${orderData.orderNumber}`,
+    type: 'orders',
+    metadata: {
+      order_number: orderData.orderNumber,
+      customer_email: orderData.customerEmail,
+      items_json: orderData.itemsJson,
+      total_amount: orderData.totalAmount,
+      stripe_session_id: orderData.stripeSessionId,
+      status: 'Paid',
+    },
+  })
+
+  return response.object as Order
+}
+
+// Changed: Added function to fetch orders by email
+export async function getOrdersByEmail(email: string): Promise<Order[]> {
+  try {
+    const response = await cosmic.objects
+      .find({
+        type: 'orders',
+        'metadata.customer_email': email,
+      })
+      .props(['id', 'title', 'slug', 'metadata', 'created_at', 'modified_at', 'type'])
+      .depth(1)
+
+    return response.objects as Order[]
+  } catch (error) {
+    if (hasStatus(error) && error.status === 404) {
+      return []
+    }
+    throw new Error('Failed to fetch orders')
+  }
+}
+
+// Changed: Added function to fetch order by stripe session ID
+export async function getOrderBySessionId(sessionId: string): Promise<Order | null> {
+  try {
+    const response = await cosmic.objects
+      .find({
+        type: 'orders',
+        'metadata.stripe_session_id': sessionId,
+      })
+      .props(['id', 'title', 'slug', 'metadata', 'created_at', 'modified_at', 'type'])
+      .depth(1)
+
+    const orders = response.objects as Order[]
+    if (orders.length === 0) {
+      return null
+    }
+    return orders[0] ?? null
+  } catch (error) {
+    if (hasStatus(error) && error.status === 404) {
+      return null
+    }
+    throw new Error('Failed to fetch order')
   }
 }

@@ -34,7 +34,24 @@ export default function Footer() {
                   Collections
                 </Link>
               </li>
-              {/* Added About link */}
+              <li>
+                <Link href="/cart" className="text-sm text-gray-500 hover:text-gray-700 transition-colors">
+                  Shopping Cart
+                </Link>
+              </li>
+              {/* Changed: Added Order Lookup link */}
+              <li>
+                <Link href="/orders" className="text-sm text-gray-500 hover:text-gray-700 transition-colors">
+                  Order Lookup
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Company */}
+          <div>
+            <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider">Company</h3>
+            <ul className="mt-4 space-y-3">
               <li>
                 <Link href="/about" className="text-sm text-gray-500 hover:text-gray-700 transition-colors">
                   About Us
@@ -45,13 +62,6 @@ export default function Footer() {
                   Contact Us
                 </Link>
               </li>
-            </ul>
-          </div>
-
-          {/* Powered by */}
-          <div>
-            <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider">Powered By</h3>
-            <ul className="mt-4 space-y-3">
               <li>
                 <a
                   href="https://www.cosmicjs.com"
@@ -59,17 +69,7 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
                 >
-                  Cosmic
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://nextjs.org"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
-                >
-                  Next.js
+                  Powered by Cosmic
                 </a>
               </li>
             </ul>
